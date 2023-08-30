@@ -36,7 +36,10 @@ public class Main {
                     System.out.println("---------------------------------");
 
                     Side_Input_Result = Main_Input.next();
-                    if(Side_Input_Result.equals("3")){
+                    if(Side_Input_Result.equals("1")){
+                        librarian.registerMember();
+                    }
+                    else if(Side_Input_Result.equals("3")){
                         librarian.addBook();
                     }
                     else if(Side_Input_Result.equals("4")){
