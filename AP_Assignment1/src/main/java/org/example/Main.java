@@ -8,6 +8,8 @@ public class Main {
         Librarian librarian = library.getLibrarian();
 
         Scanner Main_Input = new Scanner(System.in);
+        Main_Input.useDelimiter("\n");
+
         String Main_Input_Result;
         String Side_Input_Result;
 
@@ -23,6 +25,7 @@ public class Main {
             Main_Input_Result = Main_Input.next();
             if(Main_Input_Result.equals("1")){
                 while(true){
+                    System.out.println("---------------------------------");
                     System.out.println("1.  Register a member");
                     System.out.println("2.  Remove a member");
                     System.out.println("3.  Add a book");
@@ -34,15 +37,21 @@ public class Main {
 
                     Side_Input_Result = Main_Input.next();
                     if(Side_Input_Result.equals("3")){
-
+                        librarian.addBook();
+                    }
+                    else if(Side_Input_Result.equals("4")){
+                        librarian.removeBook();
+                    }
+                    else if(Side_Input_Result.equals("6")){
+                        librarian.displayBooks();
                     }
                     else if(Side_Input_Result.equals("7")){
+                        System.out.println("---------------------------------");
                         break;
                     }
                     else{
                         System.out.println("---------------------------------");
                         System.out.println("Wrong Input - Input has to be an integer from 1 to 7. Please try again!");
-                        System.out.println("---------------------------------");
                     }
                 }
             }
