@@ -11,18 +11,135 @@ public class Librarian {
         this.library = library;
     }
 
-    public void addBook(){
+    public void registerMember(){
+        String name;
+        float age;
+        int phone_no;
+
         Scanner Main_Input = new Scanner(System.in);
         Main_Input.useDelimiter("\n");
 
         System.out.println("---------------------------------");
-        System.out.print("1.    Book Title: ");
-        String title = Main_Input.next();
 
-        System.out.print("2.    Author: ");
-        String author = Main_Input.next();
+        while(true){
+            System.out.print("1. Name: ");
+            name = Main_Input.next();
+            name = name.trim();
 
+            if(name.isEmpty()){
+                System.out.println("---------------------------------");
+                System.out.println("Member with no name not allowed. Please enter again!");
+                System.out.println("---------------------------------");
+                continue;
+            }
+
+            break;
+        }
+
+        while(true){
+            System.out.print("2. Age: ");
+            try{
+                Scanner Secondary_Input = new Scanner(System.in);
+                Secondary_Input.useDelimiter("\n");
+
+                age = Secondary_Input.nextFloat();
+                if(age <= 0){
+                    System.out.println("---------------------------------");
+                    System.out.println("Input not a valid age. Please enter again!");
+                    System.out.println("---------------------------------");
+                    continue;
+                }
+            }
+            catch (InputMismatchException e){
+                System.out.println("---------------------------------");
+                System.out.println("Input not a valid age. Please enter again!");
+                System.out.println("---------------------------------");
+                continue;
+            }
+
+            break;
+        }
+
+        while(true){
+            System.out.print("3. Phone no: ");
+            try{
+                Scanner Secondary_Input = new Scanner(System.in);
+                Secondary_Input.useDelimiter("\n");
+
+                phone_no = Secondary_Input.nextInt();
+                if(phone_no < 0){
+                    System.out.println("---------------------------------");
+                    System.out.println("Input not a valid phone number. Please enter again!");
+                    System.out.println("---------------------------------");
+                    continue;
+                }
+
+                ArrayList<Member> list_members = this.library.getList_members();
+
+                for(Member member : list_members){
+                    if(member.getPhone_no() == phone_no){
+                        System.out.println("---------------------------------");
+                        System.out.println("Phone number already registered!");
+                        return;
+                    }
+                }
+            }
+            catch (InputMismatchException e){
+                System.out.println("---------------------------------");
+                System.out.println("Input not a valid phone number. Please enter again!");
+                System.out.println("---------------------------------");
+                continue;
+            }
+
+            break;
+        }
+
+        Member member = new Member(name,age,phone_no,this.library.getCurr_mem_id());
+        this.library.addMember(member);
+
+        System.out.println("---------------------------------");
+        System.out.println("Member Successfully Registered with ID - " + member.getID());
+    }
+
+    public void addBook(){
+        String title;
+        String author;
         int n_copies;
+
+        Scanner Main_Input = new Scanner(System.in);
+        Main_Input.useDelimiter("\n");
+
+        System.out.println("---------------------------------");
+
+        while(true) {
+            System.out.print("1.    Book Title: ");
+            title = Main_Input.next();
+            title = title.trim();
+
+            if(title.isEmpty()){
+                System.out.println("---------------------------------");
+                System.out.println("Blank Title not allowed. Please enter again!");
+                System.out.println("---------------------------------");
+                continue;
+            }
+
+            break;
+        }
+
+        while(true){
+            System.out.print("2.    Author: ");
+            author = Main_Input.next();
+            author = author.trim();
+
+            if(author.isEmpty()){
+                System.out.println("---------------------------------");
+                System.out.println("Author with no name not allowed. Please enter again!");
+                System.out.println("---------------------------------");
+                continue;
+            }
+
+            break;
+        }
 
         while(true){
             System.out.print("3.    Copies: ");
@@ -61,29 +178,6 @@ public class Librarian {
             }
 
             break;
-        }
-    }
-
-    public void displayBooks(){
-        ArrayList<Book> list_books = this.library.getList_books();
-        int n_books = this.library.getCurr_book_id();
-
-        System.out.println("---------------------------------");
-
-        boolean flag = false;
-
-        for(int i = 0; i < n_books - 1; i++){
-            Book book = list_books.get(i);
-            if(!book.getBorrowedStatus() && !book.getDeletedStatus()){
-                flag = true;
-                System.out.println("Book ID - " + book.getID());
-                System.out.println("Name - " + book.getTitle());
-                System.out.println("Author - " + book.getAuthor() + "\n");
-            }
-        }
-
-        if(!flag){
-            System.out.println("No Books Currently Available!");
         }
     }
 
@@ -137,9 +231,32 @@ public class Librarian {
             return;
         }
 
-        this.library.addDeletedObject(book_id-1);
+        this.library.addDeletedBook(book_id-1);
 
         System.out.println("---------------------------------");
         System.out.println("Book removed successfully!");
+    }
+
+    public void displayBooks(){
+        ArrayList<Book> list_books = this.library.getList_books();
+        int n_books = this.library.getCurr_book_id();
+
+        System.out.println("---------------------------------");
+
+        boolean flag = false;
+
+        for(int i = 0; i < n_books - 1; i++){
+            Book book = list_books.get(i);
+            if(!book.getBorrowedStatus() && !book.getDeletedStatus()){
+                flag = true;
+                System.out.println("Book ID - " + book.getID());
+                System.out.println("Name - " + book.getTitle());
+                System.out.println("Author - " + book.getAuthor() + "\n");
+            }
+        }
+
+        if(!flag){
+            System.out.println("No Books Currently Available!");
+        }
     }
 }
