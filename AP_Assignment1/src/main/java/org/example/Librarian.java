@@ -12,6 +12,10 @@ public class Librarian {
     public Librarian(Library library){
         this.library = library;
     }
+    
+    protected Library getLibrary(){
+        return this.library;
+    }
 
     protected void registerMember(){
         String name;
@@ -219,7 +223,7 @@ public class Librarian {
             Book book;
 
             for(int i = 0; i < n_copies; i++){
-                book = new Book(title,author,this.library.getCurr_book_id());
+                book = new Book(title,author,this.library.getCurr_book_id(),this.library);
                 this.library.addBook(book);
             }
 
