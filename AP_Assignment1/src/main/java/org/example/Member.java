@@ -1,4 +1,4 @@
-package org.example;
+package com.Library.system;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,14 +10,14 @@ public class Member {
     private final String name;
     private final int age;
     private int n_books;
-    private final int phone_no;
+    private final long phone_no;
     private int ID;
     private final Library library;
     private ArrayList<Book> list_books;
     private int penalty_money;
     private boolean removed_status;
 
-    public Member(String name, int age, int phone_no, int ID, Library library){
+    public Member(String name, int age, long phone_no, int ID, Library library){
         this.name = name;
         this.age = age;
         this.phone_no = phone_no;
@@ -37,7 +37,7 @@ public class Member {
         return this.age;
     }
 
-    protected int getPhone_no(){
+    protected long getPhone_no(){
         return this.phone_no;
     }
 
@@ -157,6 +157,8 @@ public class Member {
         while(true){
             try{
                 System.out.print("Book ID: ");
+                Main_Input = new Scanner(System.in);
+                Main_Input.useDelimiter("\n");
                 book_id = Main_Input.nextInt();
 
                 if(book_id <= 0){
@@ -167,6 +169,7 @@ public class Member {
                 }
             }
             catch(InputMismatchException e){
+                System.out.println("---------------------------------");
                 System.out.println("Not an integer. Please try again!");
                 System.out.println("---------------------------------");
                 continue;
@@ -177,6 +180,7 @@ public class Member {
 
         System.out.print("Book Name: ");
         String book_name = Main_Input.next();
+        book_name = book_name.trim();
 
         System.out.println("---------------------------------");
 
@@ -237,15 +241,19 @@ public class Member {
 
         while(true){
             try{
+                Main_Input = new Scanner(System.in);
+                Main_Input.useDelimiter("\n");
                 id = Main_Input.nextInt();
                 System.out.println("---------------------------------");
-                break;
             }
             catch(InputMismatchException e){
                 System.out.println("---------------------------------");
                 System.out.println("Enter a valid integer!");
                 System.out.println("---------------------------------");
+                continue;
             }
+
+            break;
         }
 
         boolean flag = false;
