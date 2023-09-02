@@ -33,6 +33,10 @@ public class Library {
     }
 
     protected void setCurr_book_id(int curr_book_id){
+        if(curr_book_id <= 0){
+            System.out.println("Book id can't be less than 1!");
+            System.exit(0);
+        }
         this.curr_book_id = curr_book_id;
     }
 
@@ -41,6 +45,10 @@ public class Library {
     }
 
     protected void setCurr_mem_id(int curr_mem_id){
+        if(curr_mem_id <= 0){
+            System.out.println("Member id can't be less than 1!");
+            System.exit(0);
+        }
         this.curr_mem_id = curr_mem_id;
     }
 
