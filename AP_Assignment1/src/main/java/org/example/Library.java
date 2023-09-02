@@ -1,4 +1,4 @@
-package org.example;
+package com.Library.system;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,11 +97,12 @@ public class Library {
         System.out.println("---------------------------------");
         System.out.print("Name : ");
         String name = Main_Input.next();
-        int phone_no;
+        name = name.trim();
+        long phone_no;
 
         try{
             System.out.print("Phone No : ");
-            phone_no = Main_Input.nextInt();
+            phone_no = Main_Input.nextLong();
             if(phone_no < 0){
                 System.out.println("---------------------------------");
                 System.out.println("Not a valid phone number! Returning to menu...");
@@ -138,10 +139,6 @@ public class Library {
     protected ArrayList<Member> getList_members(){
         ArrayList<Member> dup_list_members = (ArrayList<Member>)this.list_members.clone();
         return dup_list_members;
-    }
-
-    protected int getNum_Members(){
-        return this.list_members.size();
     }
 
     protected boolean displayAvailableBooks(int mode){
