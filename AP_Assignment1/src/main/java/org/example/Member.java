@@ -44,7 +44,7 @@ public class Member {
     protected int getN_books(){
         return this.n_books;
     }
-    
+
     protected void setN_books(int n_books){
         if(n_books < 0 || n_books > 2){
             System.out.println("No.of books has to be between 0 and 2.");
@@ -56,7 +56,7 @@ public class Member {
     protected int getPenalty_money(){
         return this.penalty_money;
     }
-    
+
     protected void setPenalty_money(int penalty_money){
         if(penalty_money < 0){
             System.out.println("Fine can't be less than 0!");
@@ -76,7 +76,7 @@ public class Member {
         }
         this.ID = ID;
     }
-    
+
     protected Library getLibrary(){
         return this.library;
     }
@@ -158,6 +158,13 @@ public class Member {
             try{
                 System.out.print("Book ID: ");
                 book_id = Main_Input.nextInt();
+
+                if(book_id <= 0){
+                    System.out.println("---------------------------------");
+                    System.out.println("Not a valid ID(has to be >=1)");
+                    System.out.println("---------------------------------");
+                    continue;
+                }
             }
             catch(InputMismatchException e){
                 System.out.println("Not an integer. Please try again!");
@@ -243,7 +250,7 @@ public class Member {
 
         boolean flag = false;
 
-        for(int j = 0; j < 2; j++){
+        for(int j = 0; j < this.n_books; j++){
             Book book = this.list_books.get(j);
             if(book.getBorrowedStatus() && !book.getDeletedStatus() && book.getID() == id){
                 flag = true;
