@@ -2,6 +2,8 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Library {
     private final Librarian librarian;
@@ -22,27 +24,27 @@ public class Library {
         this.deleted_indices_member_list = new ArrayList<>();
     }
 
-    public Librarian getLibrarian(){
+    protected Librarian getLibrarian(){
         return this.librarian;
     }
 
-    public int getCurr_book_id(){
+    protected int getCurr_book_id(){
         return this.curr_book_id;
     }
 
-    public void setCurr_book_id(int curr_book_id){
+    protected void setCurr_book_id(int curr_book_id){
         this.curr_book_id = curr_book_id;
     }
 
-    public int getCurr_mem_id(){
+    protected int getCurr_mem_id(){
         return this.curr_mem_id;
     }
 
-    public void setCurr_mem_id(int curr_mem_id){
+    protected void setCurr_mem_id(int curr_mem_id){
         this.curr_mem_id = curr_mem_id;
     }
 
-    public void addBook(Book book){
+    protected void addBook(Book book){
         if(this.deleted_indices_book_list.isEmpty()){
             this.list_books.add(book);
             this.setCurr_book_id(this.getCurr_book_id() + 1);
@@ -54,7 +56,7 @@ public class Library {
         }
     }
 
-    public void addMember(Member member){
+    protected void addMember(Member member){
         if(this.deleted_indices_member_list.isEmpty()){
             this.list_members.add(member);
             this.setCurr_mem_id(this.getCurr_mem_id() + 1);
@@ -66,31 +68,125 @@ public class Library {
         }
     }
 
-    public void addDeletedBook(int index){
+    protected void addDeletedBook(int index){
         this.list_books.get(index).setDeletedStatus(true);
 
         this.deleted_indices_book_list.add(index);
         Collections.sort(this.deleted_indices_book_list);
     }
 
-    public void addDeletedMember(int index){
+    protected void addDeletedMember(int index){
         this.list_members.get(index).setRemovedStatus(true);
 
         this.deleted_indices_member_list.add(index);
         Collections.sort(this.deleted_indices_member_list);
     }
 
-    public ArrayList<Book> getList_books(){
+    protected Member memberEntry(){
+        Scanner Main_Input = new Scanner(System.in);
+        Main_Input.useDelimiter("\n");
+
+        System.out.println("---------------------------------");
+        System.out.print("Name : ");
+        String name = Main_Input.next();
+        int phone_no;
+
+        try{
+            System.out.print("Phone No : ");
+            phone_no = Main_Input.nextInt();
+            if(phone_no < 0){
+                System.out.println("---------------------------------");
+                System.out.println("Not a valid phone number! Returning to menu...");
+                System.out.println("---------------------------------");
+                return null;
+            }
+            System.out.println("---------------------------------");
+        }
+        catch(InputMismatchException e){
+            System.out.println("---------------------------------");
+            System.out.println("Not a valid phone number! Returning to menu...");
+            System.out.println("---------------------------------");
+            return null;
+        }
+
+        for(Member member : this.list_members){
+            if(member.getName().equalsIgnoreCase(name) && !member.getRemovedStatus() && member.getPhone_no() == phone_no){
+                System.out.println("Welcome " + member.getName() + ". Member ID: " + member.getID());
+                return member;
+            }
+        }
+
+        System.out.println("Member with Name: " + name + " and Phone No: " + phone_no + " doesn't exist.");
+        System.out.println("---------------------------------");
+
+        return null;
+    }
+
+    protected ArrayList<Book> getList_books(){
         ArrayList<Book> dup_list_book = (ArrayList<Book>)this.list_books.clone();
         return dup_list_book;
     }
 
-    public ArrayList<Member> getList_members(){
+    protected ArrayList<Member> getList_members(){
         ArrayList<Member> dup_list_members = (ArrayList<Member>)this.list_members.clone();
         return dup_list_members;
     }
 
-    public int getNum_Members(){
+    protected int getNum_Members(){
         return this.list_members.size();
+    }
+
+    protected boolean displayAvailableBooks(int mode){
+        ArrayList<Book> list_books = this.list_books;
+        int n_books = this.curr_book_id;
+
+        boolean flag;
+
+        if(mode==0){
+            System.out.println("---------------------------------");
+        }
+
+        flag = false;
+
+        for (int i = 0; i < n_books - 1; i++) {
+            Book book = list_books.get(i);
+            if (!book.getDeletedStatus() && !book.getBorrowedStatus()) {
+                flag = true;
+                if(mode!=1){
+                    System.out.println("Book ID - " + book.getID());
+                    System.out.println("Name - " + book.getTitle());
+                    System.out.println("Author - " + book.getAuthor() + "\n");
+                }
+            }
+        }
+
+        if (!flag) {
+            if(mode!=1){
+                System.out.println("No Books Currently Available!");
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    protected int searchBook(int id, String name){
+        if(id > this.curr_book_id){
+            return 0;
+        }
+
+        Book book = this.list_books.get(id-1);
+
+        if(book.getTitle().equalsIgnoreCase(name)){
+            if (book.getBorrowedStatus()){
+                return 2;
+            }
+            if (book.getDeletedStatus()){
+                return 0;
+            }
+            return 1;
+        }
+
+        return 0;
     }
 }
