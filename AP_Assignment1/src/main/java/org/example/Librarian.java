@@ -1,4 +1,4 @@
-package org.example;
+package com.Library.system;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -12,7 +12,7 @@ public class Librarian {
     public Librarian(Library library){
         this.library = library;
     }
-    
+
     protected Library getLibrary(){
         return this.library;
     }
@@ -20,7 +20,7 @@ public class Librarian {
     protected void registerMember(){
         String name;
         int age;
-        int phone_no;
+        long phone_no;
 
         Scanner Main_Input = new Scanner(System.in);
         Main_Input.useDelimiter("\n");
@@ -28,6 +28,9 @@ public class Librarian {
         System.out.println("---------------------------------");
 
         while(true){
+            Main_Input = new Scanner(System.in);
+            Main_Input.useDelimiter("\n");
+
             System.out.print("1. Name: ");
             name = Main_Input.next();
             name = name.trim();
@@ -72,7 +75,7 @@ public class Librarian {
                 Scanner Secondary_Input = new Scanner(System.in);
                 Secondary_Input.useDelimiter("\n");
 
-                phone_no = Secondary_Input.nextInt();
+                phone_no = Secondary_Input.nextLong();
                 if(phone_no < 0){
                     System.out.println("---------------------------------");
                     System.out.println("Input not a valid phone number. Please enter again!");
@@ -153,6 +156,18 @@ public class Librarian {
             return;
         }
 
+        if(list_members.get(mem_id-1).getN_books() > 0){
+            System.out.println("---------------------------------");
+            System.out.println("Member has books to return. You may remove him after the return of the books!");
+            return;
+        }
+
+        if(list_members.get(mem_id-1).getPenalty_money() > 0){
+            System.out.println("---------------------------------");
+            System.out.println("Member hasn't paid his pending fines of the sum " + list_members.get(mem_id-1).getPenalty_money() + " Rupees. You may him remove him after full payment of fine!");
+            return;
+        }
+
         this.library.addDeletedMember(mem_id-1);
 
         System.out.println("---------------------------------");
@@ -170,6 +185,9 @@ public class Librarian {
         System.out.println("---------------------------------");
 
         while(true) {
+            Main_Input = new Scanner(System.in);
+            Main_Input.useDelimiter("\n");
+
             System.out.print("1.    Book Title: ");
             title = Main_Input.next();
             title = title.trim();
@@ -185,6 +203,9 @@ public class Librarian {
         }
 
         while(true){
+            Main_Input = new Scanner(System.in);
+            Main_Input.useDelimiter("\n");
+
             System.out.print("2.    Author: ");
             author = Main_Input.next();
             author = author.trim();
@@ -208,7 +229,7 @@ public class Librarian {
                 n_copies = Secondary_Input.nextInt();
                 if(n_copies < 1){
                     System.out.println("---------------------------------");
-                    System.out.println("Input not a valid no.of copies. Please enter a valid number!");
+                    System.out.println("Input not a valid no.of copies. Please enter a valid number(+ve integer)!");
                     System.out.println("---------------------------------");
                     continue;
                 }
