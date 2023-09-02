@@ -1,4 +1,4 @@
-package org.example;
+package com.Library.system;
 
 import java.util.Scanner;
 
@@ -17,14 +17,21 @@ public class Main {
         System.out.println("---------------------------------");
 
         while(true){
+            Main_Input = new Scanner(System.in);
+            Main_Input.useDelimiter("\n");
+
             System.out.println("1.  Enter as a librarian");
             System.out.println("2.  Enter as a member");
             System.out.println("3.  Exit");
             System.out.println("---------------------------------");
 
             Main_Input_Result = Main_Input.next();
+            Main_Input_Result = Main_Input_Result.trim();
             if(Main_Input_Result.equals("1")){
                 while(true){
+                    Main_Input = new Scanner(System.in);
+                    Main_Input.useDelimiter("\n");
+
                     System.out.println("---------------------------------");
                     System.out.println("1.  Register a member");
                     System.out.println("2.  Remove a member");
@@ -36,6 +43,7 @@ public class Main {
                     System.out.println("---------------------------------");
 
                     Side_Input_Result = Main_Input.next();
+                    Side_Input_Result = Side_Input_Result.trim();
                     if(Side_Input_Result.equals("1")){
                         librarian.registerMember();
                     }
@@ -71,6 +79,9 @@ public class Main {
                     continue;
                 }
                 while(true){
+                    Main_Input = new Scanner(System.in);
+                    Main_Input.useDelimiter("\n");
+
                     System.out.println("---------------------------------");
                     System.out.println("1.  List Available Books");
                     System.out.println("2.  List My Books");
@@ -81,6 +92,7 @@ public class Main {
                     System.out.println("---------------------------------");
 
                     Side_Input_Result = Main_Input.next();
+                    Side_Input_Result = Side_Input_Result.trim();
                     if(Side_Input_Result.equals("1")){
                         member.listAvailableBooks();
                     }
