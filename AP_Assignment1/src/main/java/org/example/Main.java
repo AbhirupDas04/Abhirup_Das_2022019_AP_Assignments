@@ -39,11 +39,17 @@ public class Main {
                     if(Side_Input_Result.equals("1")){
                         librarian.registerMember();
                     }
+                    else if(Side_Input_Result.equals("2")){
+                        librarian.removeMember();
+                    }
                     else if(Side_Input_Result.equals("3")){
                         librarian.addBook();
                     }
                     else if(Side_Input_Result.equals("4")){
                         librarian.removeBook();
+                    }
+                    else if(Side_Input_Result.equals("5")){
+                        librarian.displayMembers();
                     }
                     else if(Side_Input_Result.equals("6")){
                         librarian.displayBooks();
@@ -58,6 +64,49 @@ public class Main {
                     }
                 }
             }
+
+            else if(Main_Input_Result.equals("2")){
+                Member member = library.memberEntry();
+                if(member == null){
+                    continue;
+                }
+                while(true){
+                    System.out.println("---------------------------------");
+                    System.out.println("1.  List Available Books");
+                    System.out.println("2.  List My Books");
+                    System.out.println("3.  Issue Book");
+                    System.out.println("4.  Return Book");
+                    System.out.println("5.  Pay Fine");
+                    System.out.println("6.  Back");
+                    System.out.println("---------------------------------");
+
+                    Side_Input_Result = Main_Input.next();
+                    if(Side_Input_Result.equals("1")){
+                        member.listAvailableBooks();
+                    }
+                    else if(Side_Input_Result.equals("2")){
+                        member.listOwnBooks();
+                    }
+                    else if(Side_Input_Result.equals("3")){
+                        member.issueBook();
+                    }
+                    else if(Side_Input_Result.equals("4")){
+                        member.returnBook();
+                    }
+                    else if(Side_Input_Result.equals("5")){
+                        member.payFine();
+                    }
+                    else if(Side_Input_Result.equals("6")){
+                        System.out.println("---------------------------------");
+                        break;
+                    }
+                    else{
+                        System.out.println("---------------------------------");
+                        System.out.println("Wrong Input - Input has to be an integer from 1 to 7. Please try again!");
+                    }
+                }
+            }
+
             else if(Main_Input_Result.equals("3")){
                 System.out.println("---------------------------------");
                 System.out.println("Thanks for visiting");
@@ -65,6 +114,7 @@ public class Main {
 
                 break;
             }
+
             else{
                 System.out.println("---------------------------------");
                 System.out.println("Wrong Input - Input has to be 1,2 or 3. Please try again!");
