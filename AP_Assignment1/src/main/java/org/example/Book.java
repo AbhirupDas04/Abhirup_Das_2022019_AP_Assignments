@@ -1,11 +1,14 @@
 package org.example;
 
+import java.time.LocalDateTime;
+
 public class Book {
     private int ID;
     private String title;
     private String author;
     private boolean isBorrowed;
     private boolean isDeleted;
+    private LocalDateTime start_time;
 
     public Book(String title, String author, int ID){
         this.title = title;
@@ -13,33 +16,46 @@ public class Book {
         this.ID = ID;
         this.isBorrowed = false;
         this.isDeleted = false;
+        this.start_time = LocalDateTime.now();
     }
 
-    public int getID(){
+    protected int getID(){
         return this.ID;
     }
 
-    public void setID(int ID){
+    protected void setID(int ID){
         this.ID = ID;
     }
 
-    public String getTitle(){
+    protected String getTitle(){
         return this.title;
     }
 
-    public String getAuthor(){
+    protected String getAuthor(){
         return this.author;
     }
 
-    public boolean getBorrowedStatus(){
+    protected boolean getBorrowedStatus(){
         return this.isBorrowed;
     }
 
-    public boolean getDeletedStatus(){
+    protected boolean getDeletedStatus(){
         return this.isDeleted;
     }
 
-    public void setDeletedStatus(boolean value){
+    protected void setBorrowedStatus(boolean value){
+        this.isBorrowed = value;
+    }
+
+    protected void setDeletedStatus(boolean value){
         this.isDeleted = value;
+    }
+
+    protected LocalDateTime getStart_time(){
+        return this.start_time;
+    }
+
+    protected void setStart_time(LocalDateTime start_time){
+        this.start_time = start_time;
     }
 }
