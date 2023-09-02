@@ -4,16 +4,18 @@ import java.time.LocalDateTime;
 
 public class Book {
     private int ID;
-    private String title;
-    private String author;
+    private final String title;
+    private final String author;
+    private final Library library;
     private boolean isBorrowed;
     private boolean isDeleted;
     private LocalDateTime start_time;
 
-    public Book(String title, String author, int ID){
+    public Book(String title, String author, int ID, Library library){
         this.title = title;
         this.author = author;
         this.ID = ID;
+        this.library = library;
         this.isBorrowed = false;
         this.isDeleted = false;
         this.start_time = LocalDateTime.now();
@@ -24,6 +26,10 @@ public class Book {
     }
 
     protected void setID(int ID){
+        if(ID < 1 || ID > this.library.getCurr_book_id()){
+            System.out.println("ID can't be set to this. It has to be between 1 and " + this.library.getCurr_book_id());
+            System.exit(0);
+        }
         this.ID = ID;
     }
 
@@ -33,6 +39,10 @@ public class Book {
 
     protected String getAuthor(){
         return this.author;
+    }
+    
+    protected Library getLibrary(){
+        return this.library;
     }
 
     protected boolean getBorrowedStatus(){
