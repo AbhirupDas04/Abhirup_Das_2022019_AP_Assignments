@@ -7,12 +7,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Member {
-    private String name;
-    private int age;
+    private final String name;
+    private final int age;
     private int n_books;
-    private int phone_no;
+    private final int phone_no;
     private int ID;
-    private Library library;
+    private final Library library;
     private ArrayList<Book> list_books;
     private int penalty_money;
     private boolean removed_status;
@@ -44,9 +44,25 @@ public class Member {
     protected int getN_books(){
         return this.n_books;
     }
+    
+    protected void setN_books(int n_books){
+        if(n_books < 0 || n_books > 2){
+            System.out.println("No.of books has to be between 0 and 2.");
+            System.exit(0);
+        }
+        this.n_books = n_books;
+    }
 
     protected int getPenalty_money(){
         return this.penalty_money;
+    }
+    
+    protected void setPenalty_money(int penalty_money){
+        if(penalty_money < 0){
+            System.out.println("Fine can't be less than 0!");
+            System.exit(0);
+        }
+        this.penalty_money = penalty_money;
     }
 
     protected int getID(){
@@ -54,7 +70,15 @@ public class Member {
     }
 
     protected void setID(int ID){
+        if(ID < 1 || ID > this.library.getCurr_mem_id()){
+            System.out.println("ID can't be set to this. It has to be between 1 and " + this.library.getCurr_mem_id());
+            System.exit(0);
+        }
         this.ID = ID;
+    }
+    
+    protected Library getLibrary(){
+        return this.library;
     }
 
     protected void setRemovedStatus(boolean value){
@@ -66,8 +90,7 @@ public class Member {
     }
 
     protected ArrayList<Book> getList_books(){
-        ArrayList<Book> dup_list_book = (ArrayList<Book>)this.list_books.clone();
-        return dup_list_book;
+        return (ArrayList<Book>)this.list_books.clone();
     }
 
     protected void listAvailableBooks(){
@@ -229,7 +252,7 @@ public class Member {
                 this.list_books.remove(book);
                 this.n_books--;
 
-                long days = 0;
+                long days;
 
                 if(j == 0){
                     days = book1_time - 10;
