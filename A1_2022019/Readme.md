@@ -18,3 +18,5 @@ Some Assumptions/Working Principles that I have implemented in my code:
 5. Inputting integers in my program can't have whitespaces like tabs or spacing or it won't identify the number.
 6. For logging in as member, only phone number is used.
 7. For removing a member, only member ID is used.
+8. A phone number starting with 0 is the same as not having the digit entirely. For example, 098765 is the same as 98765.
+9. While displaying members, if they are currently borrowing a book which is overdue, the fines that the member owes will not count the current book until they return the book. Once, they return the book, only then, will the fine get added to the total money due.
